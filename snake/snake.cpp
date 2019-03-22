@@ -92,7 +92,8 @@ void snake::Init()
 void snake::Draw()
 {
 	Sleep(50);
-	system("cls"); //system("clear");
+	drawObject(0, 0, "");
+	//system("cls"); //system("clear");
 	for (int i = 0; i < width + 2; i++)
 		cout << "¢Ã";
 	cout << endl;
