@@ -5,17 +5,19 @@ public:
 	void headDirection();
 	void drawSnake();
 	bool GameOver();
-	void Init();
+	void Init(int diff);
 	void Draw();
 	const int width = 20;
 	const int height = 20;
-
-private:
+	void drawTail();
 	void drawObject(int x, int y, const char * str);
-	int xTemp[100]; // [coordination]
-	int yTemp[50];
+private:
+	int xTemp[21]; // [coordination]
+	int yTemp[21];
 	int size;
 	int x,y;
 	int starX, starY;
 	int dir;
+	int score;
+	int gameSpeed;
 };

@@ -26,20 +26,8 @@ void snake::headDirection()
 
 void snake::drawSnake()
 {
-	int prevX = xTemp[0];
-	int prevY = yTemp[0];
-	int prevX2, prevY2;
-	xTemp[0] = x;
-	yTemp[0] = y;
-	for (int i = 1; i < size; i++ ) {
-		prevX2 = xTemp[i];
-		prevY2 = yTemp[i];
-		xTemp[i] = prevX;
-		yTemp[i] = prevY;
-		prevX = prevX2;
-		prevY = prevY2;
-	}
 	headDirection();
+	drawTail();
 	switch (dir) {
 	case 1: //up
 		y--;
@@ -59,41 +47,56 @@ void snake::drawSnake()
 		this->starX = rand() % width;
 		this->starY = rand() % height;
 		size++;
+		score++;
 	}
 }
 
 bool snake::GameOver()
 {
 	if (x > width || x < 0 || y > height || y < 0) {
+		Sleep(500);
 		return true;
 	}
 	for (int i = 0; i < size; i++) {
-		if (xTemp[i] == x && yTemp[i] == y)
+		if (xTemp[i] == x && yTemp[i] == y) {
+			Sleep(500);
 			return true;
+			}
 	}
 	return false;
 }
 
-void snake::Init()
+void snake::Init(int diff)
 {
+	switch (diff) {
+	case 1:
+		this->gameSpeed = 100;
+		break;
+	case 2:
+		this->gameSpeed = 70;
+		break;
+	case 3:
+		this->gameSpeed = 30;
+		break;
+	}
+	this->score = 0;
 	this->size = 3;
 	this->x = width / 2;
 	this->y = height / 2;
 	this->starX = rand() % width;
 	this->starY = rand() % height;
 	this->size = 0;
-	for(int i = 0;i<100;i++)
+	for (int i = 0; i < 20; i++) {
 		this->xTemp[i] = 0;
-	for (int i = 0; i < 50; i++)
 		this->yTemp[i] = 0;
+	}
 	srand(time(0));
 }
 
 void snake::Draw()
 {
-	Sleep(50);
+	Sleep(gameSpeed);
 	drawObject(0, 0, "");
-	//system("cls"); //system("clear");
 	for (int i = 0; i < width + 2; i++)
 		cout << "¢Ã";
 	cout << endl;
@@ -126,6 +129,24 @@ void snake::Draw()
 	for(int i = 0;i<width+2;i++)
 		cout << "¢Ã";
 	cout << endl;
+	cout << "Score : " << score << endl;
+}
+
+void snake::drawTail()
+{
+	int prevX = xTemp[0];
+	int prevY = yTemp[0];
+	int prevX2, prevY2;
+	xTemp[0] = x;
+	yTemp[0] = y;
+	for (int i = 1; i < size; i++) {
+		prevX2 = xTemp[i];
+		prevY2 = yTemp[i];
+		xTemp[i] = prevX;
+		yTemp[i] = prevY;
+		prevX = prevX2;
+		prevY = prevY2;
+	}
 }
 
 void snake::drawObject(int x, int y, const char * str)
